@@ -81,4 +81,11 @@ class DB extends \PDO {
     {
         return $this->stmt->FetchAll();
     }
+
+    public function lastInsertId()
+    {
+        $stmt = "select id from blog order by id asc;"
+        query($stmt);
+        return $this->stmt->execute();
+    }
 }
