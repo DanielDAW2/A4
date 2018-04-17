@@ -5,9 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 namespace App\Sys;
-
 /**
  * Description of PDO
  *
@@ -35,7 +33,7 @@ class DB extends \PDO {
         
     }
 
-    public function getInstance(){
+    static public function getInstance(){
         
         if(!self::$instance instanceof self){         
             try
@@ -82,9 +80,9 @@ class DB extends \PDO {
         return $this->stmt->FetchAll();
     }
 
-    public function lastInsertId()
+    public function lastInsertId($seqname = NULL)
     {
-        $stmt = "select id from blog order by id asc;"
+        $stmt = "select id from ".$seqname." order by id asc;";
         query($stmt);
         return $this->stmt->execute();
     }
