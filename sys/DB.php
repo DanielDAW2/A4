@@ -5,6 +5,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
 namespace App\Sys;
 /**
  * Description of PDO
@@ -50,7 +52,7 @@ class DB extends \PDO {
     
     public function execute() {
     
-        return $this->stmt->execute();
+        $this->stmt->execute();
     }
    
     public function bind($key,$value)
@@ -75,15 +77,43 @@ class DB extends \PDO {
         $this->stmt->bindParam($key,$value,$type);
     }
     
-    public function resultSet()
+    public function resultSet() 
     {
-        return $this->stmt->FetchAll();
+        return $this->stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
-
-    public function lastInsertId($seqname = NULL)
+    
+    public function single() 
     {
-        $stmt = "select id from ".$seqname." order by id asc;";
-        query($stmt);
-        return $this->stmt->execute();
+        return $this->stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+    
+    public function rowCount() 
+    {
+        return $this->stmt->rowCount();
+    }
+    
+    public function lastInsertId($seqname = null)
+    {
+        return parent::lastInsertId($seqname);
+    }
+    
+    public function beginTransaction()
+    {
+        return parent::beginTransaction();
+    }
+    
+    public function endTransaction()
+   	{
+        return parent::commit();
+    }
+    
+    public function cancelTransaction() 
+    {
+        return parent::rollBack();
+    }
+    
+    public function debugDumpParams() 
+    {
+        $this->stmt->debugDumpParams();
     }
 }
